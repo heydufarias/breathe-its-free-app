@@ -13,43 +13,37 @@ body,
 }
 
 @font-face {
-  font-family: 'Helvetica Neue';
-  src: url('./assets/fonts/helvetica-neue/HelveticaNeue-Thin.otf') format('opentype');
+  font-family: "Helvetica Neue";
+  src: url("/fonts/helvetica-neue/HelveticaNeue-Thin.otf");
   font-weight: 100;
-  font-style: normal;
 }
 
 @font-face {
-  font-family: 'Helvetica Neue';
-  src: url('./assets/fonts/helvetica-neue/HelveticaNeue-Light.otf') format('opentype');
+  font-family: "Helvetica Neue";
+  src: url("/fonts/helvetica-neue/HelveticaNeue-Light.otf");
   font-weight: 300;
-  font-style: normal;
 }
 
 @font-face {
-  font-family: 'Helvetica Neue';
-  src: url('./assets/fonts/helvetica-neue/HelveticaNeue-Roman.otf') format('opentype');
+  font-family: "Helvetica Neue";
+  src: url("/fonts/helvetica-neue/HelveticaNeue-Roman.otf");
   font-weight: 400;
-  font-style: normal;
 }
 
 @font-face {
-  font-family: 'Helvetica Neue';
-  src: url('./assets/fonts/helvetica-neue/HelveticaNeue-Medium.otf') format('opentype');
+  font-family: "Helvetica Neue";
+  src: url("/fonts/helvetica-neue/HelveticaNeue-Medium.otf");
   font-weight: 500;
-  font-style: normal;
 }
 
 @font-face {
-  font-family: 'Helvetica Neue';
-  src: url('./assets/fonts/helvetica-neue/HelveticaNeue-Heavy.otf') format('opentype');
+  font-family: "Helvetica Neue";
+  src: url("/fonts/helvetica-neue/HelveticaNeue-Heavy.otf");
   font-weight: 800;
-  font-style: normal;
 }
 
 @font-face {
-  font-family: 'Helvetica Neue';
-  src: url('./assets/fonts/helvetica-neue/HelveticaNeue-Black.otf') format('opentype');
+  font-family: "Helvetica Neue";
+  src: url("/fonts/helvetica-neue/HelveticaNeue-Black.otf");
   font-weight: 900;
-  font-style: normal;
 }
