@@ -1,3 +1,8 @@
 {
-  "home": "Home"
+  "by": "By",
+  "modes": {
+    "relax": "Relax",
+    "focus": "Focus",
+    "sleep": "Sleep"
+  }
 }

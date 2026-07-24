@@ -1,3 +1,8 @@
 {
-  "home": "Inicial"
+  "by": "Por",
+  "modes": {
+    "relax": "Relaxar",
+    "focus": "Focar",
+    "sleep": "Dormir"
+  }
 }
