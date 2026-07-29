@@ -1,8 +1,11 @@
 {
   "by": "Por",
+  "Select mode": "Selecione o modo",
   "modes": {
     "relax": "Relaxar",
     "focus": "Focar",
     "sleep": "Dormir"
-  }
+  },
+  "Start": "Iniciar",
+  "Cycles": "Ciclos"
 }
