@@ -7,5 +7,26 @@
     "sleep": "Sleep"
   },
   "Start": "Start",
-  "Cycles": "Cycles"
+  "Cycles": "Cycles",
+  "info": {
+    "howToUse": {
+      "title": "How to use",
+      "text": "Choose a mode, select how many cycles, press Start and follow the bubble. When it grows, inhale. When it shrinks, exhale."
+    },
+    "modesSection": {
+      "title": "Modes",
+      "relax": {
+        "pattern": "5s In · 5s Out",
+        "description": "Coherent breathing. Optimizes heart rate variability and activates the parasympathetic system."
+      },
+      "focus": {
+        "pattern": "4s In · 4s Hold · 4s Out · 4s Hold",
+        "description": "Box breathing. Equal intervals create nervous system balance, calming without dulling."
+      },
+      "sleep": {
+        "pattern": "4s In · 7s Hold · 8s Out",
+        "description": "4-7-8 by Dr. Andrew Weil. Built specifically to help you fall asleep."
+      }
+    }
+  }
 }

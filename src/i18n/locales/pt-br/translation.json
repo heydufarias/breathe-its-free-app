@@ -3,9 +3,30 @@
   "Select mode": "Selecione o modo",
   "modes": {
     "relax": "Relaxar",
-    "focus": "Focar",
+    "focus": "Foco",
     "sleep": "Dormir"
   },
-  "Start": "Iniciar",
-  "Cycles": "Ciclos"
+  "Start": "Começar",
+  "Cycles": "Ciclos",
+  "info": {
+    "howToUse": {
+      "title": "Como usar",
+      "text": "Escolha um modo, selecione quantos ciclos, aperte Iniciar e siga a bolha. Quando ela crescer, inspire. Quando ela encolher, expire."
+    },
+    "modesSection": {
+      "title": "Modos",
+      "relax": {
+        "pattern": "5s Inspira · 5s Expira",
+        "description": "Respiração coerente. Otimiza a variabilidade da frequência cardíaca e ativa o sistema parassimpático."
+      },
+      "focus": {
+        "pattern": "4s Inspira · 4s Segura · 4s Expira · 4s Segura",
+        "description": "Respiração quadrada. Intervalos iguais criam equilíbrio no sistema nervoso, acalmando sem entorpecer."
+      },
+      "sleep": {
+        "pattern": "4s Inspira · 7s Segura · 8s Expira",
+        "description": "4-7-8 do Dr. Andrew Weil. Criada especificamente para ajudar você a pegar no sono."
+      }
+    }
+  }
 }
