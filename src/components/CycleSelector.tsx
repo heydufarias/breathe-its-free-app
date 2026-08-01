@@ -15,14 +15,14 @@ export function CycleSelector({ currentMode, cycles, onDecrease, onIncrease }: C
   const { t } = useTranslation();
 
   return (
-    <div className="flex flex-col items-start">
+    <div className="flex flex-11 flex-col items-start">
       <div className="pl-6 text-xl leading-6">
         {t("Cycles")}
       </div>
 
       <div
         className={cn(
-          "flex h-18 w-44 items-center justify-between rounded-full",
+          "flex h-18 w-full items-center justify-between rounded-full",
           solidBgVariants({ mode: currentMode })
         )}
       >
