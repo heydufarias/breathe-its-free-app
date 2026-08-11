@@ -11,9 +11,9 @@ body,
 @theme {
   --font-helvetica: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 
-  --color-relax: #6fa578;
-  --color-focus: #f2a65a;
-  --color-sleep: #c9a6e0;
+  --color-relax: #89D9AB;
+  --color-focus: #F99450;
+  --color-sleep: #C9A6E0;
 }
 
 @font-face {
