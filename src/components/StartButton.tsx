@@ -15,7 +15,7 @@ export function StartButton({ currentMode, onStart }: StartButtonProps) {
   return (
     <button
       onClick={onStart}
-      className="flex h-18 flex-19 cursor-pointer items-center justify-between rounded-full bg-white p-1"
+      className="flex h-18 flex-19 items-center justify-between p-1 bg-white rounded-full cursor-pointer"
     >
       <span className="pl-7 text-2xl transition-colors duration-500">
         {t("Start")}
