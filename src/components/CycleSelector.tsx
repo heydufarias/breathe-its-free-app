@@ -28,10 +28,10 @@ export function CycleSelector({ currentMode, cycles, onDecrease, onIncrease }: C
       >
         <button
           onClick={onDecrease}
-          className="flex h-16 w-16 cursor-pointer items-center justify-center rounded-full"
+          className="flex h-16 w-16 items-center justify-center rounded-full cursor-pointer"
         >
           <ChevronLeft
-            className={cn("h-9 w-9 transition-colors duration-200", cycles > 3 ? "text-white" : "text-white/50")}
+            className={cn("h-9 w-9 transition-colors duration-200", cycles > 3 ? "text-white" : "text-white/60")}
             strokeWidth={2.5}
           />
         </button>
@@ -42,10 +42,10 @@ export function CycleSelector({ currentMode, cycles, onDecrease, onIncrease }: C
 
         <button
           onClick={onIncrease}
-          className="flex h-16 w-16 cursor-pointer items-center justify-center rounded-full"
+          className="flex h-16 w-16 items-center justify-center rounded-full cursor-pointer"
         >
           <ChevronRight
-            className={cn("h-9 w-9 transition-colors duration-200", cycles < 9 ? "text-white" : "text-white/50")}
+            className={cn("h-9 w-9 transition-colors duration-200", cycles < 9 ? "text-white" : "text-white/60")}
             strokeWidth={2.5}
           />
         </button>
