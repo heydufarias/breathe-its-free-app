@@ -19,7 +19,7 @@ export function Info({ onClose }: InfoProps) {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.2, ease: "easeOut" }}
-      className="absolute flex items-center justify-center p-6 inset-0 bg-black/10 text-gray-400 backdrop-blur-[2px] z-40"
+      className="absolute flex items-center justify-center p-6 inset-0 bg-black/10 text-[#afb5b3] backdrop-blur-[2px] z-40"
     >
       <motion.div
         onClick={(e) => e.stopPropagation()}
@@ -27,11 +27,11 @@ export function Info({ onClose }: InfoProps) {
         animate={{ opacity: 1, scale: 1 }}
         exit={{ opacity: 0, scale: 0.95 }}
         transition={{ duration: 0.2, ease: "easeOut" }}
-        className="relative flex flex-col gap-8 max-h-[80vh] w-full max-w-md p-8 bg-white overflow-y-auto rounded-4xl"
+        className="relative flex flex-col max-h-[80vh] w-full max-w-md p-8 bg-white gap-8 rounded-4xl overflow-y-auto"
       >
         <button
           onClick={onClose}
-          className="absolute right-6 top-6 cursor-pointer border-none bg-transparent"
+          className="absolute top-6 right-6 cursor-pointer"
         >
           <X className="h-9 w-9" strokeWidth={2.5} />
         </button>
@@ -50,7 +50,7 @@ export function Info({ onClose }: InfoProps) {
                   <span className={cn("text-lg font-bold", layoutVariants({ mode }))}>
                     {t(`modes.${mode}`)}
                   </span>
-                  <span className="text-xs font-bold tracking-wide text-gray-400">
+                  <span className="text-xs font-bold text-[#aab0ad] tracking-wide">
                     {t(`info.modesSection.${mode}.pattern`)}
                   </span>
                 </div>
