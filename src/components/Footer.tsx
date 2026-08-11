@@ -7,7 +7,7 @@ export function Footer() {
   const current = i18n.language
 
   return (
-    <footer className="absolute bottom-0 left-0 right-0 z-10 flex items-center justify-between px-[clamp(1.5rem,5vw,2.5rem)] pb-6">
+    <footer className="absolute bottom-0 left-0 right-0 flex items-center justify-between px-[clamp(1.5rem,5vw,2.5rem)] pb-6 z-10">
       <div className="flex text-2xl font-semibold tracking-tight leading-7 gap-3">
         {(['en', 'pt-BR'] as Language[]).map((language) => {
           return (
