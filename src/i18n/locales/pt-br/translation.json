@@ -3,7 +3,7 @@
   "Select mode": "Selecione o modo",
   "modes": {
     "relax": "Relaxar",
-    "focus": "Foco",
+    "focus": "Focar",
     "sleep": "Dormir"
   },
   "Start": "Começar",
@@ -21,7 +21,7 @@
       },
       "focus": {
         "pattern": "4s Inspira · 4s Segura · 4s Expira · 4s Segura",
-        "description": "Respiração quadrada. Intervalos iguais criam equilíbrio no sistema nervoso, trazendo calma e foco."
+        "description": "Respiração quadrada. Intervalos iguais criam equilíbrio no sistema nervoso, recuperando o foco."
       },
       "sleep": {
         "pattern": "4s Inspira · 7s Segura · 8s Expira",
