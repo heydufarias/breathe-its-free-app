@@ -7,20 +7,20 @@ import type { BreathMode } from "../lib/types";
 interface MainButtonProps {
   currentMode: BreathMode;
   onStart: () => void;
-  showFinishButton: boolean;
   onFinish: () => void;
+  isSessionActive: boolean;
 }
 
-export function MainButton({ currentMode, onStart, showFinishButton, onFinish }: MainButtonProps) {
+export function MainButton({ currentMode, onStart, isSessionActive, onFinish }: MainButtonProps) {
   const { t } = useTranslation();
 
   return (
     <button
-      onClick={showFinishButton ? onFinish : onStart}
+      onClick={isSessionActive ? onFinish : onStart}
       className="flex h-18 flex-19 items-center justify-between p-1 bg-white rounded-full cursor-pointer"
     >
       <span className="pl-7 text-2xl transition-colors duration-500">
-        {showFinishButton ? t("Finish") : t("Start")}
+        {isSessionActive ? t("Finish") : t("Start")}
       </span>
       <span
         className={cn(
