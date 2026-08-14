@@ -1,4 +1,5 @@
 import { useTranslation } from "react-i18next";
+import { Fade } from "./Fade";
 
 export function Header({ showInfoButton, onInfoButtonClick }: { showInfoButton: boolean, onInfoButtonClick: () => void }) {
   const { t } = useTranslation();
@@ -10,15 +11,14 @@ export function Header({ showInfoButton, onInfoButtonClick }: { showInfoButton: 
         <span>it is free.</span>
       </div>
 
-      {showInfoButton && (
+      <Fade visible={showInfoButton}>
         <button
           onClick={onInfoButtonClick}
           className="text-2xl font-semibold cursor-pointer"
         >
           {t("info.howToUse.title")}
         </button>
-      )}
-
+      </Fade>
     </header>
   );
 }
