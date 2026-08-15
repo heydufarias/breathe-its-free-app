@@ -50,7 +50,7 @@ export function CycleSelector({
             whileTap={canDecrease ? { scale: 0.8 } : undefined}
             transition={{ duration: 0.15, ease: "easeInOut" }}
             className={cn(
-              "flex h-20 w-16 items-center justify-center rounded-full",
+              "flex h-16 w-16 items-center justify-center rounded-full will-change-transform",
               canDecrease ? "cursor-pointer" : "cursor-default"
             )}
           >
@@ -79,7 +79,7 @@ export function CycleSelector({
             whileTap={canIncrease ? { scale: 0.8 } : undefined}
             transition={{ duration: 0.15, ease: "easeInOut" }}
             className={cn(
-              "flex h-20 w-16 items-center justify-center rounded-full",
+              "flex h-16 w-16 items-center justify-center rounded-full will-change-transform",
               canIncrease ? "cursor-pointer" : "cursor-default"
             )}
           >
