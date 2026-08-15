@@ -6,7 +6,7 @@ interface FadeProps {
   visible: boolean;
   duration?: number;
   className?: string;
-  children: ReactNode;
+  children?: ReactNode;
 }
 
 export function Fade({ visible, duration = 0.5, className, children }: FadeProps) {
