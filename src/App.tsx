@@ -6,7 +6,8 @@ import { Footer } from "./components/Footer";
 import { Header } from "./components/Header";
 import { Info } from "./components/Info";
 import { ModeSelector } from "./components/ModeSelector";
-import { StartButton } from "./components/StartButton";
+import { MainButton } from "./components/MainButton";
+import { Fade } from "./components/Fade";
 import type { BreathMode } from "./lib/types";
 import { cn } from "./lib/utils";
 import { layoutVariants, solidBgVariants } from "./lib/variants";
@@ -19,8 +20,9 @@ function App() {
   });
 
   const [cycles, setCycles] = useState<number>(3);
-  const [showInfoButton, setShowInfoButton] = useState<boolean>(true);
+  const [remainingCycles, setRemainingCycles] = useState<number>(1);
   const [showInfo, setShowInfo] = useState<boolean>(false);
+  const [isSessionActive, setIsSessionActive] = useState<boolean>(false);
 
   useEffect(() => {
     localStorage.setItem("breathMode", currentMode);
@@ -44,46 +46,68 @@ function App() {
     setCycles(cycles + 1);
   }
 
+  function onStartButtonClick() {
+    setIsSessionActive(true);
+    setRemainingCycles(1);
+  }
+  function onFinishButtonClick() {
+    // setRemainingCycles(cycles);
+    setIsSessionActive(false);
+    // setShowInfoButton(false);
+  }
+
   return (
     <div
       className={cn(
-        "relative flex h-dvh w-screen flex-col overflow-hidden font-helvetica",
+        "relative flex flex-col h-dvh w-screen overflow-hidden font-helvetica",
         layoutVariants({ mode: currentMode })
       )}
     >
       <>
         <Header
-          showInfoButton={showInfoButton}
+          showInfoButton={!isSessionActive}
           onInfoButtonClick={onInfoButtonClick}
         />
 
-        <main className="relative flex-1 font-semibold tracking-tight">
-          <div className="absolute inset-0 z-0 flex items-center justify-center">
+        <main className="relative flex-1 tracking-tight">
+          <div className="absolute inset-0 flex items-center justify-center z-0">
             <motion.div
               animate={{ scale: [1, 1.15, 1] }}
               transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
               className={cn(
-                "aspect-square w-[55vmin] max-w-80 rounded-full",
+                "w-[55vmin] max-w-80 rounded-full aspect-square",
                 solidBgVariants({ mode: currentMode })
               )}
             />
           </div>
 
-          <div className="absolute left-1/2 top-28 z-10 flex w-full max-w-[488px] -translate-x-1/2 flex-col items-center px-5 sm:px-0">
-            <div className="flex pb-1 text-3xl">
-              {t("Select mode")}
+          <Fade visible={!isSessionActive} duration={0.5}>
+            <div className="absolute top-28 left-1/2 flex flex-col w-full max-w-122 items-center px-5 sm:px-0 -translate-x-1/2 z-10">
+              <div className="flex text-3xl">
+                {t("Select mode")}
+              </div>
+
+              <ModeSelector
+                currentMode={currentMode}
+                onModeChange={setCurrentMode}
+              />
             </div>
+          </Fade>
 
-            <ModeSelector
-              currentMode={currentMode}
-              onModeChange={setCurrentMode}
-            />
-          </div>
+          <Fade visible={isSessionActive} duration={2}>
+            <div className="absolute top-36 left-1/2 flex flex-col w-full max-w-122 items-center px-5 sm:px-0 -translate-x-1/2 z-10">
+              <div className="flex text-5xl tracking-tight">
+                {t("Let's start.")}
+              </div>
+            </div>
+          </Fade>
 
-          <div className="absolute bottom-16 left-1/2 z-10 flex w-full max-w-122 -translate-x-1/2 items-end gap-2 px-5 sm:px-0">
-            <StartButton
+          <div className="absolute bottom-16 left-1/2 flex w-full max-w-122 items-end px-5 sm:px-0 gap-2 -translate-x-1/2 z-10">
+            <MainButton
               currentMode={currentMode}
-              onStart={() => { }}
+              onStart={onStartButtonClick}
+              onFinish={onFinishButtonClick}
+              isSessionActive={isSessionActive}
             />
 
             <CycleSelector
@@ -91,6 +115,8 @@ function App() {
               cycles={cycles}
               onDecrease={decreaseCycle}
               onIncrease={increaseCycle}
+              isSessionActive={isSessionActive}
+              remainingCycles={remainingCycles}
             />
           </div>
         </main>
