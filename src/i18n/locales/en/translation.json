@@ -29,5 +29,12 @@
         "description": "4-7-8 breathing. Slows the body down, step by step, for a peaceful night."
       }
     }
+  },
+  "session": {
+    "phases": {
+      "inhale": "Inhale",
+      "hold": "Hold",
+      "exhale": "Exhale"
+    }
   }
 }

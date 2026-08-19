@@ -29,5 +29,12 @@
         "description": "Respiração 4-7-8. Desacelera o corpo, passo a passo, para uma noite tranquila."
       }
     }
+  },
+  "session": {
+    "phases": {
+      "inhale": "Inspire",
+      "hold": "Segure",
+      "exhale": "Expire"
+    }
   }
 }
