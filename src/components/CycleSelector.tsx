@@ -9,7 +9,7 @@ import { Fade } from "./Fade";
 interface CycleSelectorProps {
   currentMode: BreathMode;
   cycles: number;
-  remainingCycles: number;
+  currentCycle: number;
   onDecrease: () => void;
   onIncrease: () => void;
   isSessionActive: boolean;
@@ -18,7 +18,7 @@ interface CycleSelectorProps {
 export function CycleSelector({
   currentMode,
   cycles,
-  remainingCycles,
+  currentCycle,
   onDecrease,
   onIncrease,
   isSessionActive,
@@ -106,12 +106,12 @@ export function CycleSelector({
         >
           <span className="flex items-baseline">
             <motion.span
-              key={remainingCycles}
+              key={currentCycle}
               initial={{ scale: 0.85 }}
               animate={{ scale: 1 }}
               transition={{ duration: 0.2, ease: "easeInOut" }}
             >
-              {remainingCycles}
+              {currentCycle}
             </motion.span>
             <span>/{cycles}</span>
           </span>
