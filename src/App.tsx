@@ -1,14 +1,15 @@
+import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { AnimatePresence, motion } from "framer-motion";
 import { CycleSelector } from "./components/CycleSelector";
+import { Fade } from "./components/Fade";
 import { Footer } from "./components/Footer";
 import { Header } from "./components/Header";
 import { Info } from "./components/Info";
-import { ModeSelector } from "./components/ModeSelector";
 import { MainButton } from "./components/MainButton";
-import { Fade } from "./components/Fade";
-import type { BreathMode } from "./lib/types";
+import { ModeSelector } from "./components/ModeSelector";
+import type { BreathPhase } from "./lib/breathingPatterns";
+import type { BreathMode, SessionStage } from "./lib/types";
 import { cn } from "./lib/utils";
 import { layoutVariants, solidBgVariants } from "./lib/variants";
 
@@ -20,9 +21,13 @@ function App() {
   });
 
   const [cycles, setCycles] = useState<number>(3);
-  const [remainingCycles, setRemainingCycles] = useState<number>(1);
+  const [currentCycle, setCurrentCycle] = useState<number>(1);
   const [showInfo, setShowInfo] = useState<boolean>(false);
-  const [isSessionActive, setIsSessionActive] = useState<boolean>(false);
+  const [sessionStage, setSessionStage] = useState<SessionStage>("idle");
+  const isSessionActive = sessionStage !== "idle";
+  const [sequence, setSequence] = useState<BreathPhase[]>([]);
+  const [stepIndex, setStepIndex] = useState<number>(0);
+  const [secondsLeft, setSecondsLeft] = useState<number>(0);
 
   useEffect(() => {
     localStorage.setItem("breathMode", currentMode);
@@ -47,13 +52,12 @@ function App() {
   }
 
   function onStartButtonClick() {
-    setIsSessionActive(true);
-    setRemainingCycles(1);
+    setSessionStage("active");
+    setCurrentCycle(1);
   }
+
   function onFinishButtonClick() {
-    // setRemainingCycles(cycles);
-    setIsSessionActive(false);
-    // setShowInfoButton(false);
+    setSessionStage("idle");
   }
 
   return (
@@ -116,7 +120,7 @@ function App() {
               onDecrease={decreaseCycle}
               onIncrease={increaseCycle}
               isSessionActive={isSessionActive}
-              remainingCycles={remainingCycles}
+              currentCycle={currentCycle}
             />
           </div>
         </main>
