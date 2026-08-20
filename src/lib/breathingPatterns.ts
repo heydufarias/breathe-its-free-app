@@ -5,6 +5,11 @@ export interface BreathPhase {
   seconds: number;
 }
 
+export const preparePhase: BreathPhase = {
+  label: "exhale",
+  seconds: 3,
+};
+
 export const breathingPatterns: Record<BreathMode, BreathPhase[]> = {
   relax: [
     { label: "inhale", seconds: 5 },
@@ -22,11 +27,3 @@ export const breathingPatterns: Record<BreathMode, BreathPhase[]> = {
     { label: "exhale", seconds: 8 },
   ],
 };
-
-export function buildSequence(mode: BreathMode, cycles: number): BreathPhase[] {
-  const prepareStep: BreathPhase = { label: "exhale", seconds: 3 };
-  const pattern = breathingPatterns[mode];
-  const cycleSteps = Array.from({ length: cycles }, () => pattern).flat();
-
-  return [prepareStep, ...cycleSteps];
-}
