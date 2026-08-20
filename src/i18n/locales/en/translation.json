@@ -35,6 +35,11 @@
       "inhale": "Inhale",
       "hold": "Hold",
       "exhale": "Exhale"
+    },
+    "done": {
+      "relax": "Relaxed mind",
+      "focus": "Focus restored",
+      "sleep": "Peaceful sleep"
     }
   }
 }

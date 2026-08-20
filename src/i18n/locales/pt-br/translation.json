@@ -35,6 +35,11 @@
       "inhale": "Inspire",
       "hold": "Segure",
       "exhale": "Expire"
+    },
+    "done": {
+      "relax": "Mente relaxada",
+      "focus": "Foco recuperado",
+      "sleep": "Sono tranquilo"
     }
   }
 }
