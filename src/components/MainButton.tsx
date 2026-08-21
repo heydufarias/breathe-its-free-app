@@ -11,14 +11,29 @@ interface MainButtonProps {
   onStart: () => void;
   onFinish: () => void;
   isSessionActive: boolean;
+  disabled?: boolean;
 }
 
-export function MainButton({ currentMode, onStart, isSessionActive, onFinish }: MainButtonProps) {
+export function MainButton({
+  currentMode,
+  onStart,
+  isSessionActive,
+  onFinish,
+  disabled,
+}: MainButtonProps) {
   const { t } = useTranslation();
+
+  function handleClick() {
+    if (disabled) return;
+    if (isSessionActive) {
+      onFinish()
+    } else onStart();
+  }
 
   return (
     <button
-      onClick={isSessionActive ? onFinish : onStart}
+      onClick={handleClick}
+      disabled={disabled}
       className={cn(
         "relative flex h-18 flex-19 items-center p-1 rounded-full cursor-pointer overflow-hidden",
         isSessionActive ? "justify-start" : "justify-end"

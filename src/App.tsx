@@ -42,6 +42,8 @@ function App() {
   const activePhases = breathingPatterns[currentMode];
   const currentPhase = sessionStage === "prepare" ? preparePhase : activePhases[phaseIndex];
 
+  const [isTransitioning, setIsTransitioning] = useState<boolean>(false);
+
   useEffect(() => {
     localStorage.setItem("breathMode", currentMode);
   }, [currentMode]);
@@ -134,17 +136,23 @@ function App() {
   }
 
   function onStartButtonClick() {
+    setIsTransitioning(true);
     setCurrentCycle(1);
     setPhaseIndex(0);
     setSecondsLeft(preparePhase.seconds);
     setSessionStage("prepare");
+
+    setTimeout(() => setIsTransitioning(false), 500);
   }
 
   function onFinishButtonClick() {
+    setIsTransitioning(true);
     setSessionStage("idle");
     setCurrentCycle(1);
     setPhaseIndex(0);
     setSecondsLeft(0);
+
+    setTimeout(() => setIsTransitioning(false), 500);
   }
 
   return (
@@ -250,6 +258,7 @@ function App() {
             onStart={onStartButtonClick}
             onFinish={onFinishButtonClick}
             isSessionActive={isSessionActive}
+            disabled={isTransitioning}
           />
 
           <CycleSelector
