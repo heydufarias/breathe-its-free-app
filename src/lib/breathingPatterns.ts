@@ -7,7 +7,7 @@ export interface BreathPhase {
 
 export const preparePhase: BreathPhase = {
   label: "exhale",
-  seconds: 3,
+  seconds: 4,
 };
 
 export const breathingPatterns: Record<BreathMode, BreathPhase[]> = {
