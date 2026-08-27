@@ -1,11 +1,10 @@
 import { AnimatePresence, motion } from "framer-motion";
+import type { BreathPhase } from "../lib/breathingPatterns";
+import type { BreathMode, SessionStage } from "../lib/types";
 import { CycleSelector } from "./CycleSelector";
 import { Fade } from "./Fade";
 import { MainButton } from "./MainButton";
 import { ModeSelector } from "./ModeSelector";
-import type { BreathMode, BreathPhaseLabel, SessionStage } from "../lib/types";
-import { cn } from "../lib/utils";
-import { solidBgVariants } from "../lib/variants";
 
 interface SessionProps {
   currentMode: BreathMode;
@@ -15,7 +14,7 @@ interface SessionProps {
   onDecreaseCycle: () => void;
   onIncreaseCycle: () => void;
   sessionStage: SessionStage;
-  phaseLabel?: BreathPhaseLabel;
+  currentPhase?: BreathPhase;
   phaseIndex: number;
   secondsLeft: number;
   isTransitioning: boolean;
@@ -23,7 +22,7 @@ interface SessionProps {
   onFinish: () => void;
 }
 
-const phaseText: Record<BreathPhaseLabel, string> = {
+const phaseText: Record<string, string> = {
   inhale: "Puxe o ar",
   hold: "Segure",
   exhale: "Solte o ar",
@@ -43,7 +42,7 @@ export function Session({
   onDecreaseCycle,
   onIncreaseCycle,
   sessionStage,
-  phaseLabel,
+  currentPhase,
   phaseIndex,
   secondsLeft,
   isTransitioning,
@@ -71,7 +70,7 @@ export function Session({
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.25, ease: "easeOut" }}
-                className="absolute text-[7rem] font-medium leading-none"
+                className="absolute text-[25vmin] sm:text-[7rem] font-medium leading-none"
               >
                 {secondsLeft}
               </motion.span>
@@ -81,7 +80,7 @@ export function Session({
       );
     }
 
-    if (sessionStage === "active" && phaseLabel) {
+    if (sessionStage === "active" && currentPhase) {
       return (
         <motion.div
           key="active"
@@ -89,7 +88,7 @@ export function Session({
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 1, delay: 0.4, ease: "easeInOut" }}
-          className="flex items-center justify-center w-full h-full text-white"
+          className="relative flex items-center justify-center w-full h-full text-focus px-4"
         >
           <AnimatePresence mode="wait">
             <motion.span
@@ -99,9 +98,9 @@ export function Session({
               exit={{ opacity: 0 }}
               transition={{ duration: 0.5, ease: "easeIn" }}
               style={{ wordSpacing: "-0.15em" }}
-              className="text-[4.5rem] tracking-[-0.2rem] leading-none text-center"
+              className="absolute text-[13vmin] sm:text-[4.5rem] tracking-[-0.05em] sm:tracking-[-0.2rem] leading-none text-center"
             >
-              {phaseText[phaseLabel]}
+              {phaseText[currentPhase.label]}
             </motion.span>
           </AnimatePresence>
         </motion.div>
@@ -116,7 +115,7 @@ export function Session({
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 1.2, ease: "easeInOut" }}
-          className="flex flex-col items-center justify-center text-[2.8rem] tracking-tighter leading-[1.8rem] text-white text-center"
+          className="absolute flex flex-col items-center justify-center text-[8vmin] sm:text-[2.8rem] tracking-tighter leading-[1.05] text-white text-center w-full h-full px-4"
         >
           {doneText[currentMode]}
         </motion.div>
@@ -127,38 +126,31 @@ export function Session({
   }
 
   return (
-    <main className="relative flex-1 tracking-tight">
+    <main className="relative flex-1 tracking-tight pointer-events-none">
       <Fade visible={!isSessionActive} duration={0.5}>
-        <div className="absolute top-28 left-1/2 flex flex-col w-full max-w-122 items-center px-5 sm:px-0 -translate-x-1/2 z-10">
+        <div className="absolute top-26 left-1/2 flex flex-col w-full max-w-122 items-center px-5 sm:px-0 -translate-x-1/2 z-20 pointer-events-auto">
           <div className="flex text-3xl">O que você precisa agora?</div>
           <ModeSelector currentMode={currentMode} onModeChange={onModeChange} />
         </div>
       </Fade>
 
       <Fade visible={sessionStage === "prepare"} duration={1.5}>
-        <div className="absolute top-36 left-1/2 flex flex-col w-full max-w-122 items-center px-5 sm:px-0 -translate-x-1/2 z-10 text-center">
-          <div className="flex text-5xl tracking-tight leading-9.5" style={{ wordSpacing: "-0.15em" }}>
+        <div className="absolute top-36 left-1/2 flex flex-col w-full max-w-122 items-center px-5 sm:px-0 -translate-x-1/2 z-20 text-center pointer-events-none">
+          <div className="flex text-[6.5vmin] sm:text-5xl tracking-tighter leading-9">
             Solte o ar o máximo que conseguir.
           </div>
         </div>
       </Fade>
 
-      <div className="absolute inset-0 flex items-center justify-center z-0">
-        <motion.div
-          animate={{ scale: [1, 1.15, 1] }}
-          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-          className={cn(
-            "relative flex items-center justify-center w-[55vmin] max-w-80 rounded-full aspect-square",
-            solidBgVariants({ mode: currentMode })
-          )}
-        >
+      <div className="absolute inset-0 flex items-center justify-center z-10 pointer-events-none">
+        <div className="relative w-[98vmin] max-w-[640px] aspect-square translate-y-10">
           <AnimatePresence mode="wait">
             {renderCircleContent()}
           </AnimatePresence>
-        </motion.div>
+        </div>
       </div>
 
-      <div className="absolute bottom-16 left-1/2 flex w-full max-w-122 items-end px-5 sm:px-0 gap-2 -translate-x-1/2 z-10">
+      <div className="absolute bottom-16 left-1/2 flex w-full max-w-122 items-end px-5 sm:px-0 gap-2 -translate-x-1/2 z-20 pointer-events-auto">
         <MainButton
           currentMode={currentMode}
           onStart={onStart}

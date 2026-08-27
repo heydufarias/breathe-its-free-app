@@ -1,5 +1,7 @@
+import { Canvas } from "@react-three/fiber";
 import { AnimatePresence } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { Blob } from "./components/Blob";
 import { Footer } from "./components/Footer";
 import { Header } from "./components/Header";
 import { Info } from "./components/Info";
@@ -8,6 +10,7 @@ import { breathingPatterns, preparePhase } from "./lib/breathingPatterns";
 import type { BreathMode, SessionStage } from "./lib/types";
 import { cn } from "./lib/utils";
 import { layoutVariants } from "./lib/variants";
+import { modeColor } from "./lib/consts";
 
 function App() {
   const [currentMode, setCurrentMode] = useState<BreathMode>(() => {
@@ -22,9 +25,13 @@ function App() {
   const [secondsLeft, setSecondsLeft] = useState<number>(0);
   const [isTransitioning, setIsTransitioning] = useState<boolean>(false);
 
+  const rotYRef = useRef(0);
+  const [rotYTarget, setRotYTarget] = useState(0);
+
   const isSessionActive = sessionStage !== "idle";
   const activePhases = breathingPatterns[currentMode];
-  const currentPhase = sessionStage === "prepare" ? preparePhase : activePhases[phaseIndex];
+  const currentPhase =
+    sessionStage === "prepare" ? preparePhase : activePhases[phaseIndex];
 
   useEffect(() => {
     localStorage.setItem("breathMode", currentMode);
@@ -115,6 +122,12 @@ function App() {
     setCycles((value) => value + 1);
   }
 
+  function onModeChange(mode: BreathMode) {
+    setCurrentMode(mode);
+    rotYRef.current += Math.PI * 2;
+    setRotYTarget(rotYRef.current);
+  }
+
   function onStartButtonClick() {
     setIsTransitioning(true);
     setCurrentCycle(1);
@@ -147,15 +160,31 @@ function App() {
         onInfoButtonClick={onInfoButtonClick}
       />
 
+      <div className="absolute inset-0 flex items-center justify-center z-0 pointer-events-none">
+        <div className="relative w-[98vmin] max-w-[640px] aspect-square translate-y-8">
+          <Canvas gl={{ alpha: true }} camera={{ position: [0, 0, 22], fov: 30 }}>
+            <ambientLight intensity={1.5} />
+            <directionalLight position={[75, 75, 5]} intensity={0.8} />
+            <directionalLight position={[-5, -5, 2]} intensity={1.8} />
+            <Blob
+              color={modeColor[currentMode]}
+              rotYTarget={rotYTarget}
+              sessionStage={sessionStage}
+              currentPhase={currentPhase}
+            />
+          </Canvas>
+        </div>
+      </div>
+
       <Session
         currentMode={currentMode}
-        onModeChange={setCurrentMode}
+        onModeChange={onModeChange}
         cycles={cycles}
         currentCycle={currentCycle}
         onDecreaseCycle={decreaseCycle}
         onIncreaseCycle={increaseCycle}
         sessionStage={sessionStage}
-        phaseLabel={currentPhase?.label}
+        currentPhase={currentPhase}
         phaseIndex={phaseIndex}
         secondsLeft={secondsLeft}
         isTransitioning={isTransitioning}

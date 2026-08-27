@@ -9,15 +9,16 @@ body,
 }
 
 @theme {
-  --font-helvetica: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --font-helvetica: "Helvetica Neue", Helvetica, Arial, sans-serif;
 
-  --color-relax: #89D9AB;
-  --color-focus: #F99450;
-  --color-sleep: #C9A6E0;
+  --color-relax: #89d9ab;
+  --color-focus: #f99450;
+  --color-sleep: #c9a6e0;
 }
 
 @font-face {
   font-family: "Helvetica Neue";
-  src: url("./assets/fonts/helvetica-neue/HelveticaNeueBold.ttf") format("truetype");
+  src: url("./assets/fonts/helvetica-neue/HelveticaNeueBold.ttf")
+    format("truetype");
   font-weight: 100 900;
 }
