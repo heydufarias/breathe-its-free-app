@@ -30,7 +30,7 @@ export function CycleSelector({
 
   return (
     <div className="flex flex-11 min-w-0 flex-col items-start text-4xl">
-      <div className="pl-6 text-xl pb-0.5 leading-6">{t("Repetições")}</div>
+      <div className="pl-6 text-xl pb-0.5 leading-6">{t("Cycles")}</div>
 
       <div className="relative flex h-18 w-full items-center rounded-full overflow-hidden">
         <Fade
