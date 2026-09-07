@@ -20,10 +20,12 @@
         "pattern": "5s Inspira · 5s Expira",
         "description": "Respiração coerente. Ativa o sistema parassimpático, que traz calma ao corpo."
       },
+
       "focus": {
         "pattern": "4s Inspira · 4s Segura · 4s Expira · 4s Segura",
         "description": "Respiração quadrada. Intervalos iguais criam equilíbrio no sistema nervoso, recuperando o foco."
       },
+
       "sleep": {
         "pattern": "4s Inspira · 7s Segura · 8s Expira",
         "description": "Respiração 4-7-8. Desacelera o corpo, passo a passo, para uma noite tranquila."
@@ -31,10 +33,12 @@
     }
   },
   "session": {
+    "title": "O que você precisa agora?",
+    "prepare": "Solte o ar o máximo que conseguir.",
     "phases": {
-      "inhale": "Inspire",
+      "inhale": "Puxe o ar",
       "hold": "Segure",
-      "exhale": "Expire"
+      "exhale": "Solte o ar"
     },
     "done": {
       "relax": "Mente relaxada",
