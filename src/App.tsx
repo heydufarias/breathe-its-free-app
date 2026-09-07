@@ -141,9 +141,9 @@ function App() {
   function onFinishButtonClick() {
     setIsTransitioning(true);
     setSessionStage("idle");
-    setCurrentCycle(1);
     setPhaseIndex(0);
     setSecondsLeft(0);
+    setCurrentCycle(1);
 
     setTimeout(() => setIsTransitioning(false), 500);
   }
@@ -161,7 +161,7 @@ function App() {
       />
 
       <div className="absolute inset-0 flex items-center justify-center z-0 pointer-events-none">
-        <div className="relative w-[98vmin] max-w-[640px] aspect-square translate-y-8">
+        <div className="relative w-[98vmin] max-w-160 aspect-square translate-y-8">
           <Canvas gl={{ alpha: true }} camera={{ position: [0, 0, 22], fov: 30 }}>
             <ambientLight intensity={1.5} />
             <directionalLight position={[75, 75, 5]} intensity={0.8} />
