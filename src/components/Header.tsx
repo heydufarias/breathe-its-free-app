@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
 import { Fade } from "./Fade";
 
-type HeaderProps = {
+interface HeaderProps {
   showInfoButton: boolean;
   onInfoButtonClick: () => void;
 }
