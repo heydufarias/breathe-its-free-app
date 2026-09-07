@@ -1,7 +1,12 @@
 import { useTranslation } from "react-i18next";
 import { Fade } from "./Fade";
 
-export function Header({ showInfoButton, onInfoButtonClick }: { showInfoButton: boolean, onInfoButtonClick: () => void }) {
+type HeaderProps = {
+  showInfoButton: boolean;
+  onInfoButtonClick: () => void;
+}
+
+export function Header({ showInfoButton, onInfoButtonClick }: HeaderProps) {
   const { t } = useTranslation();
 
   return (
