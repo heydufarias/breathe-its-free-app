@@ -3,23 +3,21 @@ import { Environment } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
-import type { BreathPhase } from "../lib/breathingPatterns";
-import type { SessionStage } from "../lib/types";
+import { modeColor } from "../lib/consts";
+import { state } from "../state/state";
 import { MagicalMaterialImpl } from "./MagicalMaterial";
 
 const IDLE_SCALE = 3.1;
 const IDLE_WOBBLE = 0.15;
 const SMALL_SCALE = 2.8;
 const LARGE_SCALE = 4.0;
+const MATERIAL_OPACITY = 0.6;
 
-interface BlobProps {
-  color: string;
-  rotYTarget: number;
-  sessionStage: SessionStage;
-  currentPhase?: BreathPhase;
-}
+export function Blob() {
+  const currentMode = state.use((value) => value.currentMode);
+  const sessionStage = state.use((value) => value.sessionStage);
+  const currentPhase = state.use((value) => value.currentPhase);
 
-export function Blob({ color, rotYTarget, sessionStage, currentPhase }: BlobProps) {
   const meshRef = useRef<THREE.Mesh>(null);
   const materialRef = useRef(
     new MagicalMaterialImpl({
@@ -28,72 +26,86 @@ export function Blob({ color, rotYTarget, sessionStage, currentPhase }: BlobProp
       clearcoatRoughness: 0.4,
       metalness: 0,
       transparent: true,
-      opacity: 0.6,
+      opacity: 0, // Opacidade inicial tratada pelo react-spring
     })
   );
 
   const [targetScale, setTargetScale] = useState(IDLE_SCALE);
   const [duration, setDuration] = useState(4000);
+  const [rotYTarget, setRotYTarget] = useState(0);
+  const isFirstRender = useRef(true);
 
+  // 1. Gira o blob 360 graus suavemente ao trocar de modo
+  useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
+    setRotYTarget((prev) => prev + Math.PI * 2);
+  }, [currentMode]);
+
+  // 2. Controla o tamanho (escala) e o tempo de transição (duração)
   useEffect(() => {
     if (sessionStage === "idle" || sessionStage === "done") {
       setDuration(4000);
-      let grown = false;
-
-      const interval = setInterval(() => {
-        grown = !grown;
-        setTargetScale(grown ? IDLE_SCALE + IDLE_WOBBLE : IDLE_SCALE);
-      }, 4000);
-
       setTargetScale(IDLE_SCALE);
+
+      let isGrown = false;
+      const interval = setInterval(() => {
+        isGrown = !isGrown;
+        setTargetScale(isGrown ? IDLE_SCALE + IDLE_WOBBLE : IDLE_SCALE);
+      }, 4000);
 
       return () => clearInterval(interval);
     }
 
+    // Calcula a duração com base na fase da respiração
+    const phaseSeconds = currentPhase ? currentPhase.seconds * 1000 : 3000;
+    setDuration(phaseSeconds);
+
+    // Ajusta a escala alvo
     if (sessionStage === "prepare") {
       setTargetScale(SMALL_SCALE);
-      setDuration(currentPhase ? currentPhase.seconds * 1000 : 3000);
-      return;
-    }
-
-    if (sessionStage === "active" && currentPhase) {
-      setDuration(currentPhase.seconds * 1000);
-
-      if (currentPhase.label === "inhale") {
-        setTargetScale(LARGE_SCALE);
-      } else if (currentPhase.label === "exhale") {
-        setTargetScale(SMALL_SCALE);
-      }
+    } else if (sessionStage === "active" && currentPhase) {
+      setTargetScale(currentPhase.label === "inhale" ? LARGE_SCALE : SMALL_SCALE);
     }
   }, [sessionStage, currentPhase]);
 
-  const c = new THREE.Color(color);
-  const { r, g, b, rotY, scale } = useSpring({
-    r: c.r,
-    g: c.g,
-    b: c.b,
+  // 3. Orquestra todas as animações
+  const color = new THREE.Color(modeColor[currentMode]);
+  const { r, g, b, rotY, scale, opacity } = useSpring({
+    from: { opacity: 0 }, // Efeito de Fade-in automático no mount
+    r: color.r,
+    g: color.g,
+    b: color.b,
     rotY: rotYTarget,
     scale: targetScale,
+    opacity: MATERIAL_OPACITY,
     config: (key) => {
       if (key === "scale") {
-        return {
-          duration,
-          easing: (t) => (1 - Math.cos(t * Math.PI)) / 2,
-        };
+        return { duration, easing: (t) => (1 - Math.cos(t * Math.PI)) / 2 };
+      }
+      if (key === "opacity") {
+        return { duration: 1000, easing: (t) => t };
       }
       return { tension: 45, friction: 22 };
     },
   });
 
+  // 4. Aplica os valores animados quadro a quadro (60fps)
   useFrame((_, delta) => {
     const mat = materialRef.current;
     mat.time += delta * mat.speed;
     mat.surfaceTime += delta * mat.surfaceSpeed;
-    mat.color.setRGB(r.get(), g.get(), b.get());
 
-    if (!meshRef.current) return;
-    meshRef.current.rotation.y = rotY.get();
-    meshRef.current.scale.setScalar(scale.get());
+    // Atualiza cor e opacidade direto no material shader
+    mat.color.setRGB(r.get(), g.get(), b.get());
+    mat.opacity = opacity.get();
+
+    if (meshRef.current) {
+      meshRef.current.rotation.y = rotY.get();
+      meshRef.current.scale.setScalar(scale.get());
+    }
   });
 
   return (

@@ -1,28 +1,22 @@
 import { useTranslation } from "react-i18next";
 import { AnimatePresence, motion } from "framer-motion";
-import type { BreathPhase } from "../lib/breathingPatterns";
-import type { BreathMode, SessionStage } from "../lib/types";
+import { useEffect } from "react";
 import { cn } from "../lib/utils";
+import type { BreathMode } from "../lib/types";
+import { state } from "../state/state";
+import {
+  decreaseCycles,
+  finishSession,
+  increaseCycles,
+  setMode,
+  startSession,
+  tick,
+  resetToIdle,
+} from "../state/actions";
 import { CycleSelector } from "./CycleSelector";
 import { Fade } from "./Fade";
 import { MainButton } from "./MainButton";
 import { ModeSelector } from "./ModeSelector";
-
-interface SessionProps {
-  currentMode: BreathMode;
-  onModeChange: (mode: BreathMode) => void;
-  cycles: number;
-  currentCycle: number;
-  onDecreaseCycle: () => void;
-  onIncreaseCycle: () => void;
-  sessionStage: SessionStage;
-  currentPhase?: BreathPhase;
-  phaseIndex: number;
-  secondsLeft: number;
-  isTransitioning: boolean;
-  onStart: () => void;
-  onFinish: () => void;
-}
 
 const modeTextColor: Record<BreathMode, string> = {
   relax: "text-relax",
@@ -30,23 +24,41 @@ const modeTextColor: Record<BreathMode, string> = {
   sleep: "text-sleep",
 };
 
-export function Session({
-  currentMode,
-  onModeChange,
-  cycles,
-  currentCycle,
-  onDecreaseCycle,
-  onIncreaseCycle,
-  sessionStage,
-  currentPhase,
-  phaseIndex,
-  secondsLeft,
-  isTransitioning,
-  onStart,
-  onFinish,
-}: SessionProps) {
+export function Session() {
   const { t } = useTranslation();
+
+  const currentMode = state.use((value) => value.currentMode);
+  const cycles = state.use((value) => value.cycles);
+  const currentCycle = state.use((value) => value.currentCycle);
+  const sessionStage = state.use((value) => value.sessionStage);
+  const currentPhase = state.use((value) => value.currentPhase);
+  const phaseIndex = state.use((value) => value.phaseIndex);
+  const secondsLeft = state.use((value) => value.secondsLeft);
+  const isTransitioning = state.use((value) => value.isTransitioning);
+
   const isSessionActive = sessionStage !== "idle";
+
+  // Gerencia o cronômetro das sessões "prepare" e "active"
+  useEffect(() => {
+    if (sessionStage !== "prepare" && sessionStage !== "active") {
+      return;
+    }
+
+    const timeout = setTimeout(tick, 1000);
+
+    return () => clearTimeout(timeout);
+  }, [sessionStage, secondsLeft]);
+
+  // Gerencia o retorno automático para "idle" após finalizar
+  useEffect(() => {
+    if (sessionStage !== "done") {
+      return;
+    }
+
+    const timeout = setTimeout(resetToIdle, 3000);
+
+    return () => clearTimeout(timeout);
+  }, [sessionStage]);
 
   function renderCircleContent() {
     if (sessionStage === "prepare") {
@@ -59,7 +71,7 @@ export function Session({
           transition={{ duration: 0.6 }}
           className={cn(
             "relative flex items-center justify-center w-full h-full",
-            modeTextColor[currentMode]
+            modeTextColor[currentMode],
           )}
         >
           <AnimatePresence mode="wait">
@@ -90,7 +102,7 @@ export function Session({
           transition={{ duration: 1, delay: 0.4, ease: "easeInOut" }}
           className={cn(
             "relative flex items-center justify-center w-full h-full px-4",
-            modeTextColor[currentMode]
+            modeTextColor[currentMode],
           )}
         >
           <AnimatePresence mode="wait">
@@ -133,7 +145,11 @@ export function Session({
       <Fade visible={!isSessionActive} duration={0.5}>
         <div className="absolute top-26 left-1/2 flex flex-col w-full max-w-122 items-center px-5 sm:px-0 -translate-x-1/2 z-20 pointer-events-auto">
           <div className="flex text-3xl">{t("session.title")}</div>
-          <ModeSelector currentMode={currentMode} onModeChange={onModeChange} />
+
+          <ModeSelector
+            currentMode={currentMode}
+            onModeChange={setMode}
+          />
         </div>
       </Fade>
 
@@ -156,8 +172,8 @@ export function Session({
       <div className="absolute bottom-16 left-1/2 flex w-full max-w-122 items-end px-5 sm:px-0 gap-2 -translate-x-1/2 z-20 pointer-events-auto">
         <MainButton
           currentMode={currentMode}
-          onStart={onStart}
-          onFinish={onFinish}
+          onStart={startSession}
+          onFinish={finishSession}
           isSessionActive={isSessionActive}
           disabled={isTransitioning}
         />
@@ -165,8 +181,8 @@ export function Session({
         <CycleSelector
           currentMode={currentMode}
           cycles={cycles}
-          onDecrease={onDecreaseCycle}
-          onIncrease={onIncreaseCycle}
+          onDecrease={decreaseCycles}
+          onIncrease={increaseCycles}
           isSessionActive={isSessionActive}
           currentCycle={currentCycle}
         />
