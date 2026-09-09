@@ -67,7 +67,7 @@ export function finishSession() {
   }, 500);
 }
 
-export function tick() {
+export function advanceSession() {
   state.set((value) => {
     if (value.secondsLeft > 1) {
       return {
