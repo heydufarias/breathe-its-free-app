@@ -2,14 +2,14 @@ import { motion } from "framer-motion";
 import type { ReactNode } from "react";
 import { cn } from "../lib/utils";
 
-interface FadeProps {
+interface MotionFadeProps {
   visible: boolean;
   duration?: number;
   className?: string;
   children?: ReactNode;
 }
 
-export function Fade({ visible, duration = 0.5, className, children }: FadeProps) {
+export function MotionFade({ visible, duration = 0.5, className, children }: MotionFadeProps) {
   return (
     <motion.span
       initial={false}
