@@ -50,7 +50,6 @@ export function Info({ onClose }: InfoProps) {
                   <span
                     className={cn(
                       "text-lg font-bold transition-colors duration-500",
-                      modeStyles[mode].bgSoft,
                       modeStyles[mode].text
                     )}
                   >

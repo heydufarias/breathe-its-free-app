@@ -16,7 +16,7 @@ export function ModeSelector({ currentMode, onModeChange }: ModeSelectorProps) {
       <div
         className={cn(
           "relative flex p-1 mt-0.5 rounded-full backdrop-blur-2xl backdrop-saturate-150 transition-colors duration-500",
-          modeStyles[currentMode].bg
+          modeStyles[currentMode].bgPrimary
         )}
       >
         <div

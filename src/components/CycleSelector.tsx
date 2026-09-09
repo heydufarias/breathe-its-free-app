@@ -37,7 +37,7 @@ export function CycleSelector({
           visible={!isSessionActive}
           className={cn(
             "absolute inset-0 z-0 transition-colors duration-500",
-            modeStyles[currentMode].bg
+            modeStyles[currentMode].bgPrimary
           )}
         />
 
