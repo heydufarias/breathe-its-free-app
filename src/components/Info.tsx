@@ -1,9 +1,9 @@
-import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import { X } from "lucide-react";
 import { cn } from "../lib/utils";
 import { modeStyles } from "../lib/consts";
 import { MODES } from "../lib/consts";
+import { MotionIn } from "./motion/MotionIn";
 
 interface InfoProps {
   onClose: () => void;
@@ -13,19 +13,14 @@ export function Info({ onClose }: InfoProps) {
   const { t } = useTranslation();
 
   return (
-    <motion.div
+    <MotionIn
       onClick={onClose}
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
       transition={{ duration: 0.2, ease: "easeOut" }}
       className="absolute flex items-center justify-center p-6 inset-0 bg-black/10 text-[#afb5b3] backdrop-blur-[2px] z-40"
     >
-      <motion.div
+      <MotionIn
+        scale
         onClick={(e) => e.stopPropagation()}
-        initial={{ opacity: 0, scale: 0.95 }}
-        animate={{ opacity: 1, scale: 1 }}
-        exit={{ opacity: 0, scale: 0.95 }}
         transition={{ duration: 0.2, ease: "easeOut" }}
         className="relative flex flex-col max-h-[80vh] w-full max-w-md p-8 bg-white gap-8 rounded-4xl overflow-y-auto"
       >
@@ -66,7 +61,7 @@ export function Info({ onClose }: InfoProps) {
             ))}
           </div>
         </section>
-      </motion.div>
-    </motion.div>
+      </MotionIn>
+    </MotionIn>
   );
 }
