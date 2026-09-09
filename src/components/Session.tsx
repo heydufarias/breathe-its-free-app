@@ -1,22 +1,22 @@
-import { useTranslation } from "react-i18next";
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect } from "react";
-import { cn } from "../lib/utils";
+import { useTranslation } from "react-i18next";
 import type { BreathMode } from "../lib/types";
-import { state } from "../state/state";
+import { cn } from "../lib/utils";
 import {
+  advanceSession,
   decreaseCycles,
   finishSession,
   increaseCycles,
+  resetToIdle,
   setMode,
   startSession,
-  tick,
-  resetToIdle,
 } from "../state/actions";
+import { state } from "../state/state";
 import { CycleSelector } from "./CycleSelector";
-import { Fade } from "./Fade";
 import { MainButton } from "./MainButton";
 import { ModeSelector } from "./ModeSelector";
+import { MotionFade } from "./MotionFade";
 
 const modeTextColor: Record<BreathMode, string> = {
   relax: "text-relax",
@@ -38,18 +38,16 @@ export function Session() {
 
   const isSessionActive = sessionStage !== "idle";
 
-  // Gerencia o cronômetro das sessões "prepare" e "active"
   useEffect(() => {
     if (sessionStage !== "prepare" && sessionStage !== "active") {
       return;
     }
 
-    const timeout = setTimeout(tick, 1000);
+    const timeout = setTimeout(advanceSession, 1000);
 
     return () => clearTimeout(timeout);
   }, [sessionStage, secondsLeft]);
 
-  // Gerencia o retorno automático para "idle" após finalizar
   useEffect(() => {
     if (sessionStage !== "done") {
       return;
@@ -142,7 +140,7 @@ export function Session() {
 
   return (
     <main className="relative flex-1 tracking-tight pointer-events-none">
-      <Fade visible={!isSessionActive} duration={0.5}>
+      <MotionFade visible={!isSessionActive} duration={0.5}>
         <div className="absolute top-26 left-1/2 flex flex-col w-full max-w-122 items-center px-5 sm:px-0 -translate-x-1/2 z-20 pointer-events-auto">
           <div className="flex text-3xl">{t("session.title")}</div>
 
@@ -151,15 +149,15 @@ export function Session() {
             onModeChange={setMode}
           />
         </div>
-      </Fade>
+      </MotionFade>
 
-      <Fade visible={sessionStage === "prepare"} duration={1.5}>
+      <MotionFade visible={sessionStage === "prepare"} duration={sessionStage === "prepare" ? 1.5 : 0.3}>
         <div className="absolute top-36 left-1/2 flex flex-col w-full max-w-122 items-center px-5 sm:px-0 -translate-x-1/2 z-20 text-center pointer-events-none">
           <div className="flex text-[6.5vmin] sm:text-5xl tracking-tighter leading-9">
             {t("session.prepare")}
           </div>
         </div>
-      </Fade>
+      </MotionFade>
 
       <div className="absolute inset-0 flex items-center justify-center z-10 pointer-events-none">
         <div className="relative w-[98vmin] max-w-160 aspect-square translate-y-10">
