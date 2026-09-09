@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import { MotionFade } from "./MotionFade";
+import { MotionFade } from "./motion/MotionFade";
 
 interface HeaderProps {
   showInfoButton: boolean;

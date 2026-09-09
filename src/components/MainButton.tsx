@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import type { BreathMode } from "../lib/types";
 import { cn } from "../lib/utils";
 import { solidBgVariants } from "../lib/variants";
-import { MotionFade } from "./MotionFade";
+import { MotionFade } from "./motion/MotionFade";
 
 interface MainButtonProps {
   currentMode: BreathMode;
