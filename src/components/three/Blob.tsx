@@ -40,13 +40,17 @@ export function Blob() {
       isFirstRender.current = false;
       return;
     }
-    setRotYTarget((prev) => prev + Math.PI * 2);
+    setTimeout(() => {
+      setRotYTarget((prev) => prev + Math.PI * 2);
+    }, 0);
   }, [currentMode]);
 
   useEffect(() => {
     if (sessionStage === "idle" || sessionStage === "done") {
-      setDuration(4000);
-      setTargetScale(IDLE_SCALE);
+      setTimeout(() => {
+        setDuration(4000);
+        setTargetScale(IDLE_SCALE);
+      }, 0);
 
       let isGrown = false;
       const interval = setInterval(() => {
@@ -58,13 +62,20 @@ export function Blob() {
     }
 
     const phaseSeconds = currentPhase ? currentPhase.seconds * 1000 : 3000;
-    setDuration(phaseSeconds);
 
-    if (sessionStage === "prepare") {
-      setTargetScale(SMALL_SCALE);
-    } else if (sessionStage === "active" && currentPhase) {
-      setTargetScale(currentPhase.label === "inhale" ? LARGE_SCALE : SMALL_SCALE);
-    }
+    setTimeout(() => {
+      setDuration(phaseSeconds);
+
+      if (sessionStage === "prepare") {
+        setTargetScale(SMALL_SCALE);
+      } else if (sessionStage === "active" && currentPhase) {
+        if (currentPhase.label === "inhale") {
+          setTargetScale(LARGE_SCALE);
+        } else if (currentPhase.label === "exhale") {
+          setTargetScale(SMALL_SCALE);
+        }
+      }
+    }, 0);
   }, [sessionStage, currentPhase]);
 
   const color = new THREE.Color(modeStyles[currentMode].hex);
