@@ -1,10 +1,10 @@
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import type { BreathMode } from "../lib/types";
 import { cn } from "../lib/utils";
 import { solidBgVariants } from "../lib/variants";
-import type { BreathMode } from "../lib/types";
-import { Fade } from "./Fade";
+import { MotionFade } from "./MotionFade";
 
 interface MainButtonProps {
   currentMode: BreathMode;
@@ -39,20 +39,20 @@ export function MainButton({
         isSessionActive ? "justify-start" : "justify-end"
       )}
     >
-      <Fade
+      <MotionFade
         visible={!isSessionActive}
         className="absolute inset-0 z-0 bg-white"
       />
 
       <div className="absolute left-7 flex h-full items-center pointer-events-none z-10">
-        <Fade
+        <MotionFade
           visible={!isSessionActive}
           className="text-primary text-2xl">
           {t("Start")}
-        </Fade>
+        </MotionFade>
       </div>
 
-      <Fade
+      <MotionFade
         visible={isSessionActive}
         className={cn("absolute inset-0 z-0 transition-colors duration-500",
           solidBgVariants({ mode: currentMode })
@@ -60,13 +60,13 @@ export function MainButton({
       />
 
       <div className="absolute right-7 flex h-full items-center pointer-events-none z-10">
-        <Fade
+        <MotionFade
           visible={isSessionActive}
           duration={0.5}
           className="text-white text-2xl"
         >
           {t("Finish")}
-        </Fade>
+        </MotionFade>
       </div>
 
       <motion.div
@@ -74,14 +74,14 @@ export function MainButton({
         transition={{ duration: 0.5, ease: "easeInOut" }}
         className="relative z-20 flex h-16 w-16 shrink-0 items-center justify-center rounded-full overflow-hidden"
       >
-        <Fade
+        <MotionFade
           visible={!isSessionActive}
           className={cn("absolute inset-0 transition-colors duration-500",
             solidBgVariants({ mode: currentMode })
           )}
         />
 
-        <Fade
+        <MotionFade
           visible={isSessionActive}
           className="absolute inset-0 bg-white"
         />

@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import { Fade } from "./Fade";
+import { MotionFade } from "./MotionFade";
 
 interface HeaderProps {
   showInfoButton: boolean;
@@ -16,14 +16,14 @@ export function Header({ showInfoButton, onInfoButtonClick }: HeaderProps) {
         <span>it is free.</span>
       </div>
 
-      <Fade visible={showInfoButton}>
+      <MotionFade visible={showInfoButton}>
         <button
           onClick={onInfoButtonClick}
           className="text-2xl font-semibold cursor-pointer"
         >
           {t("info.howToUse.title")}
         </button>
-      </Fade>
+      </MotionFade>
     </header>
   );
 }

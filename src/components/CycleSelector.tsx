@@ -1,10 +1,10 @@
 import { motion } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import type { BreathMode } from "../lib/types";
 import { cn } from "../lib/utils";
 import { solidBgVariants } from "../lib/variants";
-import type { BreathMode } from "../lib/types";
-import { Fade } from "./Fade";
+import { MotionFade } from "./MotionFade";
 
 interface CycleSelectorProps {
   currentMode: BreathMode;
@@ -33,14 +33,14 @@ export function CycleSelector({
       <div className="pl-6 text-xl pb-0.5 leading-6">{t("Cycles")}</div>
 
       <div className="relative flex h-18 w-full items-center rounded-full overflow-hidden">
-        <Fade
+        <MotionFade
           visible={!isSessionActive}
           className={cn("absolute inset-0 z-0 transition-colors duration-500",
             solidBgVariants({ mode: currentMode })
           )}
         />
 
-        <Fade
+        <MotionFade
           visible={!isSessionActive}
           className="absolute inset-0 z-10 flex w-full items-center justify-between"
         >
@@ -90,14 +90,14 @@ export function CycleSelector({
               strokeWidth={2.5}
             />
           </motion.button>
-        </Fade>
+        </MotionFade>
 
-        <Fade
+        <MotionFade
           visible={isSessionActive}
           className="absolute inset-0 z-0 bg-white"
         />
 
-        <Fade
+        <MotionFade
           visible={isSessionActive}
           className={cn(
             "absolute inset-0 z-10 flex w-full items-center justify-center",
@@ -115,7 +115,7 @@ export function CycleSelector({
             </motion.span>
             <span>/{cycles}</span>
           </span>
-        </Fade>
+        </MotionFade>
       </div>
     </div>
   );
