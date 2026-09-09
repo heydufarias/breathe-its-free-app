@@ -36,7 +36,7 @@ export function MainButton({
       disabled={disabled}
       className={cn(
         "relative flex h-18 flex-19 items-center p-1 rounded-full cursor-pointer overflow-hidden",
-        isSessionActive ? "justify-start" : "justify-end"
+        isSessionActive ? "justify-end" : "justify-start"
       )}
     >
       <MotionFade
@@ -44,7 +44,7 @@ export function MainButton({
         className="absolute inset-0 z-0 bg-white"
       />
 
-      <div className="absolute left-7 flex h-full items-center pointer-events-none z-10">
+      <div className="absolute right-7 flex h-full items-center pointer-events-none z-10">
         <MotionFade visible={!isSessionActive} className="text-primary text-2xl">
           {t("Start")}
         </MotionFade>
@@ -58,7 +58,7 @@ export function MainButton({
         )}
       />
 
-      <div className="absolute right-7 flex h-full items-center pointer-events-none z-10">
+      <div className="absolute left-7 flex h-full items-center pointer-events-none z-10">
         <MotionFade
           visible={isSessionActive}
           duration={0.5}
