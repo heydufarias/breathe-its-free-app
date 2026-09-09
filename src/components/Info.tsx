@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import { X } from "lucide-react";
 import { cn } from "../lib/utils";
-import { layoutVariants } from "../lib/variants";
+import { modeStyles } from "../lib/consts";
 import { MODES } from "../lib/consts";
 
 interface InfoProps {
@@ -47,7 +47,13 @@ export function Info({ onClose }: InfoProps) {
             {MODES.map((mode) => (
               <div key={mode}>
                 <div className="flex items-baseline gap-2">
-                  <span className={cn("text-lg font-bold", layoutVariants({ mode }))}>
+                  <span
+                    className={cn(
+                      "text-lg font-bold transition-colors duration-500",
+                      modeStyles[mode].bgSoft,
+                      modeStyles[mode].text
+                    )}
+                  >
                     {t(`modes.${mode}`)}
                   </span>
                   <span className="text-xs font-bold text-[#aab0ad] tracking-wide">

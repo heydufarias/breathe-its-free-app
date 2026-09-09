@@ -3,7 +3,7 @@ import { Environment } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
-import { modeColor } from "../lib/consts";
+import { modeStyles } from "../lib/consts";
 import { state } from "../state/state";
 import { MagicalMaterialImpl } from "./MagicalMaterial";
 
@@ -26,7 +26,7 @@ export function Blob() {
       clearcoatRoughness: 0.4,
       metalness: 0,
       transparent: true,
-      opacity: 0, // Opacidade inicial tratada pelo react-spring
+      opacity: 0,
     })
   );
 
@@ -35,7 +35,6 @@ export function Blob() {
   const [rotYTarget, setRotYTarget] = useState(0);
   const isFirstRender = useRef(true);
 
-  // 1. Gira o blob 360 graus suavemente ao trocar de modo
   useEffect(() => {
     if (isFirstRender.current) {
       isFirstRender.current = false;
@@ -44,7 +43,6 @@ export function Blob() {
     setRotYTarget((prev) => prev + Math.PI * 2);
   }, [currentMode]);
 
-  // 2. Controla o tamanho (escala) e o tempo de transição (duração)
   useEffect(() => {
     if (sessionStage === "idle" || sessionStage === "done") {
       setDuration(4000);
@@ -59,11 +57,9 @@ export function Blob() {
       return () => clearInterval(interval);
     }
 
-    // Calcula a duração com base na fase da respiração
     const phaseSeconds = currentPhase ? currentPhase.seconds * 1000 : 3000;
     setDuration(phaseSeconds);
 
-    // Ajusta a escala alvo
     if (sessionStage === "prepare") {
       setTargetScale(SMALL_SCALE);
     } else if (sessionStage === "active" && currentPhase) {
@@ -71,10 +67,9 @@ export function Blob() {
     }
   }, [sessionStage, currentPhase]);
 
-  // 3. Orquestra todas as animações
-  const color = new THREE.Color(modeColor[currentMode]);
+  const color = new THREE.Color(modeStyles[currentMode].hex);
   const { r, g, b, rotY, scale, opacity } = useSpring({
-    from: { opacity: 0 }, // Efeito de Fade-in automático no mount
+    from: { opacity: 0 },
     r: color.r,
     g: color.g,
     b: color.b,
@@ -92,13 +87,10 @@ export function Blob() {
     },
   });
 
-  // 4. Aplica os valores animados quadro a quadro (60fps)
   useFrame((_, delta) => {
     const mat = materialRef.current;
     mat.time += delta * mat.speed;
     mat.surfaceTime += delta * mat.surfaceSpeed;
-
-    // Atualiza cor e opacidade direto no material shader
     mat.color.setRGB(r.get(), g.get(), b.get());
     mat.opacity = opacity.get();
 

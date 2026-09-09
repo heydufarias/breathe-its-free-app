@@ -1,9 +1,9 @@
 import { motion } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { modeStyles } from "../lib/consts";
 import type { BreathMode } from "../lib/types";
 import { cn } from "../lib/utils";
-import { solidBgVariants } from "../lib/variants";
 import { MotionFade } from "./motion/MotionFade";
 
 interface CycleSelectorProps {
@@ -35,8 +35,9 @@ export function CycleSelector({
       <div className="relative flex h-18 w-full items-center rounded-full overflow-hidden">
         <MotionFade
           visible={!isSessionActive}
-          className={cn("absolute inset-0 z-0 transition-colors duration-500",
-            solidBgVariants({ mode: currentMode })
+          className={cn(
+            "absolute inset-0 z-0 transition-colors duration-500",
+            modeStyles[currentMode].bg
           )}
         />
 
@@ -55,7 +56,8 @@ export function CycleSelector({
             )}
           >
             <ChevronLeft
-              className={cn("h-9 w-9 transition-colors",
+              className={cn(
+                "h-9 w-9 transition-colors",
                 canDecrease ? "text-white" : "text-white/60"
               )}
               strokeWidth={2.5}
@@ -84,9 +86,10 @@ export function CycleSelector({
             )}
           >
             <ChevronRight
-              className={cn("h-9 w-9 transition-colors",
-                canIncrease ? "text-white" : "text-white/60")
-              }
+              className={cn(
+                "h-9 w-9 transition-colors",
+                canIncrease ? "text-white" : "text-white/60"
+              )}
               strokeWidth={2.5}
             />
           </motion.button>

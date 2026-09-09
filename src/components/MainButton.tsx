@@ -1,9 +1,9 @@
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { modeStyles } from "../lib/consts";
 import type { BreathMode } from "../lib/types";
 import { cn } from "../lib/utils";
-import { solidBgVariants } from "../lib/variants";
 import { MotionFade } from "./motion/MotionFade";
 
 interface MainButtonProps {
@@ -26,7 +26,7 @@ export function MainButton({
   function handleClick() {
     if (disabled) return;
     if (isSessionActive) {
-      onFinish()
+      onFinish();
     } else onStart();
   }
 
@@ -45,17 +45,16 @@ export function MainButton({
       />
 
       <div className="absolute left-7 flex h-full items-center pointer-events-none z-10">
-        <MotionFade
-          visible={!isSessionActive}
-          className="text-primary text-2xl">
+        <MotionFade visible={!isSessionActive} className="text-primary text-2xl">
           {t("Start")}
         </MotionFade>
       </div>
 
       <MotionFade
         visible={isSessionActive}
-        className={cn("absolute inset-0 z-0 transition-colors duration-500",
-          solidBgVariants({ mode: currentMode })
+        className={cn(
+          "absolute inset-0 z-0 transition-colors duration-500",
+          modeStyles[currentMode].bg
         )}
       />
 
@@ -76,8 +75,9 @@ export function MainButton({
       >
         <MotionFade
           visible={!isSessionActive}
-          className={cn("absolute inset-0 transition-colors duration-500",
-            solidBgVariants({ mode: currentMode })
+          className={cn(
+            "absolute inset-0 transition-colors duration-500",
+            modeStyles[currentMode].bg
           )}
         />
 

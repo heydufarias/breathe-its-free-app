@@ -18,7 +18,6 @@ import { MainButton } from "./MainButton";
 import { ModeSelector } from "./ModeSelector";
 import { MotionFade } from "./motion/MotionFade";
 
-
 const modeTextColor: Record<BreathMode, string> = {
   relax: "text-relax",
   focus: "text-focus",

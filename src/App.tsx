@@ -6,8 +6,8 @@ import { Footer } from "./components/Footer";
 import { Header } from "./components/Header";
 import { Info } from "./components/Info";
 import { Session } from "./components/Session";
+import { modeStyles } from "./lib/consts";
 import { cn } from "./lib/utils";
-import { layoutVariants } from "./lib/variants";
 import { state } from "./state/state";
 
 export default function App() {
@@ -18,8 +18,9 @@ export default function App() {
   return (
     <div
       className={cn(
-        "relative flex flex-col h-dvh w-screen overflow-hidden font-helvetica",
-        layoutVariants({ mode: currentMode })
+        "relative flex flex-col h-dvh w-screen overflow-hidden font-helvetica transition-colors duration-500",
+        modeStyles[currentMode].bgSoft,
+        modeStyles[currentMode].text
       )}
     >
       <Header

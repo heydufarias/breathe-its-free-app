@@ -1,8 +1,7 @@
 import { useTranslation } from "react-i18next";
-import { MODES } from "../lib/consts";
+import { MODES, modeStyles } from "../lib/consts";
 import type { BreathMode } from "../lib/types";
 import { cn } from "../lib/utils";
-import { indicatorVariants, solidBgVariants } from "../lib/variants";
 
 interface ModeSelectorProps {
   currentMode: BreathMode;
@@ -16,14 +15,14 @@ export function ModeSelector({ currentMode, onModeChange }: ModeSelectorProps) {
     <div className="w-full">
       <div
         className={cn(
-          "relative flex p-1 mt-0.5 rounded-full backdrop-blur-2xl backdrop-saturate-150",
-          solidBgVariants({ mode: currentMode })
+          "relative flex p-1 mt-0.5 rounded-full backdrop-blur-2xl backdrop-saturate-150 transition-colors duration-500",
+          modeStyles[currentMode].bg
         )}
       >
         <div
           className={cn(
-            "absolute top-1 bottom-1 left-1 bg-white rounded-full backdrop-blur-md",
-            indicatorVariants({ mode: currentMode })
+            "absolute top-1 bottom-1 left-1 bg-white rounded-full backdrop-blur-md transition-all duration-500 ease-in-out",
+            modeStyles[currentMode].translate
           )}
           style={{ width: "calc((100% - 0.5rem) / 3)" }}
         />
