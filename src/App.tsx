@@ -1,7 +1,7 @@
 import { Canvas } from "@react-three/fiber";
 import { AnimatePresence } from "framer-motion";
 import { useState } from "react";
-import { Blob } from "./components/Blob";
+import { Blob } from "./components/three/Blob";
 import { Footer } from "./components/Footer";
 import { Header } from "./components/Header";
 import { Info } from "./components/Info";
