@@ -1,6 +1,6 @@
 import { entity } from "simpler-state";
-import { breathingPatterns } from "../lib/breathingPatterns";
 import type { BreathPhase } from "../lib/breathingPatterns";
+import { breathingPatterns } from "../lib/breathingPatterns";
 import type { BreathMode, SessionStage } from "../lib/types";
 
 export interface State {
@@ -14,10 +14,9 @@ export interface State {
   isTransitioning: boolean;
 }
 
-const currentMode =
-  (localStorage.getItem("breathMode") as BreathMode) || "relax";
+const currentMode = (localStorage.getItem("breathMode") as BreathMode) || "relax";
 
-export const state = entity<State>({
+const initialState: State = {
   currentMode,
   cycles: 3,
   sessionStage: "idle",
@@ -26,4 +25,6 @@ export const state = entity<State>({
   secondsLeft: 0,
   currentCycle: 1,
   isTransitioning: false,
-});
+};
+
+export const state = entity<State>(initialState);
