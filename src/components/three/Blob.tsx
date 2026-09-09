@@ -3,8 +3,8 @@ import { Environment } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
-import { modeStyles } from "../lib/consts";
-import { state } from "../state/state";
+import { modeStyles } from "../../lib/consts";
+import { state } from "../../state/state";
 import { MagicalMaterialImpl } from "./MagicalMaterial";
 
 const IDLE_SCALE = 3.1;
