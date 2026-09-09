@@ -1,4 +1,4 @@
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence } from "framer-motion";
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { modeStyles } from "../lib/consts";
@@ -17,6 +17,8 @@ import { CycleSelector } from "./CycleSelector";
 import { MainButton } from "./MainButton";
 import { ModeSelector } from "./ModeSelector";
 import { MotionFade } from "./motion/MotionFade";
+import { MotionIn } from "./motion/MotionIn";
+import { MotionInSpan } from "./motion/MotionInSpan";
 
 export function Session() {
   const { t } = useTranslation();
@@ -29,7 +31,6 @@ export function Session() {
   const phaseIndex = state.use((value) => value.phaseIndex);
   const secondsLeft = state.use((value) => value.secondsLeft);
   const isTransitioning = state.use((value) => value.isTransitioning);
-
   const isSessionActive = sessionStage !== "idle";
 
   useEffect(() => {
@@ -55,11 +56,8 @@ export function Session() {
   function renderCircleContent() {
     if (sessionStage === "prepare") {
       return (
-        <motion.div
+        <MotionIn
           key="prepare"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
           transition={{ duration: 0.6 }}
           className={cn(
             "relative flex items-center justify-center w-full h-full",
@@ -68,29 +66,24 @@ export function Session() {
         >
           <AnimatePresence mode="wait">
             {secondsLeft <= 3 && (
-              <motion.span
+              <MotionInSpan
                 key={secondsLeft}
-                initial={{ opacity: 0, scale: 0.85 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0 }}
+                scale
                 transition={{ duration: 0.25, ease: "easeOut" }}
                 className="absolute text-[25vmin] sm:text-[7rem] font-medium leading-none"
               >
                 {secondsLeft}
-              </motion.span>
+              </MotionInSpan>
             )}
           </AnimatePresence>
-        </motion.div>
+        </MotionIn>
       );
     }
 
     if (sessionStage === "active" && currentPhase) {
       return (
-        <motion.div
+        <MotionIn
           key="active"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
           transition={{ duration: 1, delay: 0.4, ease: "easeInOut" }}
           className={cn(
             "relative flex items-center justify-center w-full h-full px-4",
@@ -98,34 +91,28 @@ export function Session() {
           )}
         >
           <AnimatePresence mode="wait">
-            <motion.span
+            <MotionInSpan
               key={`${sessionStage}-${phaseIndex}`}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
               transition={{ duration: 0.5, ease: "easeIn" }}
               style={{ wordSpacing: "-0.15em" }}
               className="absolute text-[13vmin] sm:text-[4.5rem] tracking-tighter sm:tracking-[-0.2rem] leading-none text-center whitespace-pre-line"
             >
               {t(`session.phases.${currentPhase.label}`)}
-            </motion.span>
+            </MotionInSpan>
           </AnimatePresence>
-        </motion.div>
+        </MotionIn>
       );
     }
 
     if (sessionStage === "done") {
       return (
-        <motion.div
+        <MotionIn
           key="done"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
           transition={{ duration: 1.2, ease: "easeInOut" }}
           className="absolute flex flex-col items-center justify-center text-[8vmin] sm:text-[2.8rem] tracking-tighter leading-[1.05] text-white text-center w-full h-full px-4"
         >
           {t(`session.done.${currentMode}`)}
-        </motion.div>
+        </MotionIn>
       );
     }
 
