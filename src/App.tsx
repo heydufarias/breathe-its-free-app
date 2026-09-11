@@ -1,11 +1,10 @@
 import { AnimatePresence } from "framer-motion";
 import { useState } from "react";
+import { BackgroundBlob } from "./components/BackgroundBlob";
 import { Footer } from "./components/Footer";
 import { Header } from "./components/Header";
 import { Info } from "./components/Info";
 import { Session } from "./components/Session";
-
-import { BackgroundBlob } from "./components/BackgroundBlob";
 import { modeStyles } from "./lib/consts";
 import { cn } from "./lib/utils";
 import { state } from "./state/state";
