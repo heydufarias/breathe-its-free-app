@@ -60,7 +60,7 @@ export function Session() {
           key="prepare"
           transition={{ duration: 0.6 }}
           className={cn(
-            "relative flex items-center justify-center w-full h-full",
+            "relative flex h-full w-full items-center justify-center",
             modeStyles[currentMode].text,
           )}
         >
@@ -70,7 +70,7 @@ export function Session() {
                 key={secondsLeft}
                 scale
                 transition={{ duration: 0.25, ease: "easeOut" }}
-                className="absolute text-[25vmin] sm:text-[7rem] font-medium leading-none"
+                className="absolute text-[clamp(2rem,20vmin,7rem)] font-medium"
               >
                 {secondsLeft}
               </MotionInSpan>
@@ -86,16 +86,15 @@ export function Session() {
           key="active"
           transition={{ duration: 1, delay: 0.4, ease: "easeInOut" }}
           className={cn(
-            "relative flex items-center justify-center w-full h-full px-4",
+            "relative flex h-full w-full items-center justify-center px-4",
             modeStyles[currentMode].text,
           )}
         >
           <AnimatePresence mode="wait">
             <MotionInSpan
-              key={`${sessionStage}-${phaseIndex}`}
+              key={phaseIndex}
               transition={{ duration: 0.5, ease: "easeIn" }}
-              style={{ wordSpacing: "-0.15em" }}
-              className="absolute text-[13vmin] sm:text-[4.5rem] tracking-tighter sm:tracking-[-0.2rem] leading-none text-center whitespace-pre-line"
+              className="absolute text-[clamp(2.5rem,13vmin,4.5rem)] tracking-tight [word-spacing:-0.15em] text-center whitespace-pre-line"
             >
               {t(`session.phases.${currentPhase.label}`)}
             </MotionInSpan>
@@ -109,9 +108,20 @@ export function Session() {
         <MotionIn
           key="done"
           transition={{ duration: 1.2, ease: "easeInOut" }}
-          className="absolute flex flex-col items-center justify-center text-[13vmin] sm:text-[4.5rem] tracking-tighter leading-[1.05] text-center w-full h-full px-4"
+          className={cn(
+            "absolute flex flex-col items-center justify-center text-[clamp(1.75rem,9vmin,3.25rem)] tracking-tight text-center w-full h-full px-4",
+            {
+              relax: "leading-10.5",
+              focus: "leading-9.5",
+              sleep: "leading-10.5",
+            }[currentMode]
+          )}
         >
-          {t(`session.done.${currentMode}`)}
+          {t(`session.done.${currentMode}`).split(" ").map((word, index) => (
+            <span key={index} className="block">
+              {word}
+            </span>
+          ))}
         </MotionIn>
       );
     }
@@ -124,7 +134,6 @@ export function Session() {
       <MotionFade visible={!isSessionActive} duration={0.5}>
         <div className="absolute top-26 left-1/2 flex flex-col w-full max-w-122 items-center px-5 sm:px-0 -translate-x-1/2 z-20 pointer-events-auto">
           <div className="flex text-3xl">{t("session.title")}</div>
-
           <ModeSelector
             currentMode={currentMode}
             onModeChange={setMode}
@@ -134,7 +143,7 @@ export function Session() {
 
       <MotionFade visible={sessionStage === "prepare"} duration={sessionStage === "prepare" ? 1.5 : sessionStage === "active" ? 1.5 : 0.2}>
         <div className="absolute top-36 left-1/2 flex flex-col w-full max-w-122 items-center px-5 sm:px-0 -translate-x-1/2 z-20 text-center pointer-events-none">
-          <div className="flex text-[6.5vmin] sm:text-5xl tracking-tighter leading-9">
+          <div className="flex text-[6.5vmin] sm:text-5xl tracking-tight leading-[37.2px]">
             {t("session.prepare")}
           </div>
         </div>
