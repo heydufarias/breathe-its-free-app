@@ -2,6 +2,10 @@ import { breathingPatterns, preparePhase } from "../lib/breathingPatterns";
 import type { BreathMode } from "../lib/types";
 import { state } from "./state";
 
+function saveCycles(cycles: number) {
+  localStorage.setItem("cycles", String(cycles));
+}
+
 export function setMode(mode: BreathMode) {
   localStorage.setItem("breathMode", mode);
 
@@ -16,17 +20,19 @@ export function setMode(mode: BreathMode) {
 }
 
 export function decreaseCycles() {
-  state.set((value) => ({
-    ...value,
-    cycles: Math.max(3, value.cycles - 1),
-  }));
+  state.set((value) => {
+    const cycles = Math.max(3, value.cycles - 1);
+    saveCycles(cycles);
+    return { ...value, cycles };
+  });
 }
 
 export function increaseCycles() {
-  state.set((value) => ({
-    ...value,
-    cycles: Math.min(9, value.cycles + 1),
-  }));
+  state.set((value) => {
+    const cycles = Math.min(9, value.cycles + 1);
+    saveCycles(cycles);
+    return { ...value, cycles };
+  });
 }
 
 export function startSession() {
