@@ -1,10 +1,10 @@
 import { motion } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { modeStyles } from "../lib/consts";
-import type { BreathMode } from "../lib/types";
-import { cn } from "../lib/utils";
-import { MotionFade } from "./motion/MotionFade";
+import { modeStyles } from "../../lib/consts";
+import type { BreathMode } from "../../lib/types";
+import { cn } from "../../lib/utils";
+import { MotionFade } from "../motion/MotionFade";
 
 interface CycleSelectorProps {
   currentMode: BreathMode;
@@ -29,7 +29,7 @@ export function CycleSelector({
   const canIncrease = cycles < 9;
 
   return (
-    <div className="flex flex-11 min-w-0 flex-col items-start text-4xl">
+    <div className="flex flex-11 flex-col min-w-0 items-start text-4xl">
       <div className="pl-6 text-xl pb-0.5 leading-6">{t("Cycles")}</div>
 
       <div className="relative flex h-18 w-full items-center rounded-full overflow-hidden">

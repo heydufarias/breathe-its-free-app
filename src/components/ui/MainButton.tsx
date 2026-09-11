@@ -1,10 +1,10 @@
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { modeStyles } from "../lib/consts";
-import type { BreathMode } from "../lib/types";
-import { cn } from "../lib/utils";
-import { MotionFade } from "./motion/MotionFade";
+import { modeStyles } from "../../lib/consts";
+import type { BreathMode } from "../../lib/types";
+import { cn } from "../../lib/utils";
+import { MotionFade } from "../motion/MotionFade";
 
 interface MainButtonProps {
   currentMode: BreathMode;

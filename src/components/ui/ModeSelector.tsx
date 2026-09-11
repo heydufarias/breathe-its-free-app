@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
-import { MODES, modeStyles } from "../lib/consts";
-import type { BreathMode } from "../lib/types";
-import { cn } from "../lib/utils";
+import { MODES, modeStyles } from "../../lib/consts";
+import type { BreathMode } from "../../lib/types";
+import { cn } from "../../lib/utils";
 
 interface ModeSelectorProps {
   currentMode: BreathMode;

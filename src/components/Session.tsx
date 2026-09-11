@@ -13,12 +13,12 @@ import {
   startSession,
 } from "../state/actions";
 import { state } from "../state/state";
-import { CycleSelector } from "./CycleSelector";
-import { MainButton } from "./MainButton";
-import { ModeSelector } from "./ModeSelector";
 import { MotionFade } from "./motion/MotionFade";
 import { MotionIn } from "./motion/MotionIn";
 import { MotionInSpan } from "./motion/MotionInSpan";
+import { CycleSelector } from "./ui/CycleSelector";
+import { MainButton } from "./ui/MainButton";
+import { ModeSelector } from "./ui/ModeSelector";
 
 export function Session() {
   const { t } = useTranslation();
@@ -109,7 +109,7 @@ export function Session() {
         <MotionIn
           key="done"
           transition={{ duration: 1.2, ease: "easeInOut" }}
-          className="absolute flex flex-col items-center justify-center text-[8vmin] sm:text-[2.8rem] tracking-tighter leading-[1.05] text-white text-center w-full h-full px-4"
+          className="absolute flex flex-col items-center justify-center text-[13vmin] sm:text-[4.5rem] tracking-tighter leading-[1.05] text-center w-full h-full px-4"
         >
           {t(`session.done.${currentMode}`)}
         </MotionIn>
@@ -148,7 +148,7 @@ export function Session() {
         </div>
       </div>
 
-      <div className="absolute bottom-16 left-1/2 flex w-full max-w-122 items-end px-5 sm:px-0 gap-2 -translate-x-1/2 z-20 pointer-events-auto">
+      <div className="absolute bottom-22 sm:bottom-17 left-1/2 flex w-full max-w-122 items-end px-5 sm:px-0 gap-2 -translate-x-1/2 z-20 pointer-events-auto">
         <MainButton
           currentMode={currentMode}
           onStart={startSession}
