@@ -20,7 +20,7 @@ export default function App() {
   return (
     <div
       className={cn(
-        "relative flex flex-col h-dvh w-screen overflow-hidden font-helvetica transition-colors duration-500",
+        "relative flex flex-col h-dvh w-screen font-helvetica transition-colors duration-500 overflow-hidden",
         modeStyles[currentMode].bgSurface,
         modeStyles[currentMode].text
       )}
