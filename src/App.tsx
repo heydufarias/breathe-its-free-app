@@ -1,5 +1,5 @@
 import { AnimatePresence } from "framer-motion";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { BackgroundBlob } from "./components/BackgroundBlob";
 import { Footer } from "./components/Footer";
 import { Header } from "./components/Header";
@@ -17,10 +17,26 @@ export default function App() {
   const openInfo = () => setShowInfo(true);
   const closeInfo = () => setShowInfo(false);
 
+  // Sincroniza a cor do fundo da tela (body) com o modo atual
+  // Isso resolve a faixa branca que aparece no overscroll do celular
+  useEffect(() => {
+    const bgClass = modeStyles[currentMode].bgSurface;
+
+    // Adiciona a classe atualizada ao body
+    document.body.classList.add(bgClass);
+    document.body.style.transition = "background-color 500ms"; // Suaviza a transição
+
+    // Função de limpeza para remover a classe antiga quando o modo mudar
+    return () => {
+      document.body.classList.remove(bgClass);
+    };
+  }, [currentMode]);
+
   return (
     <div
       className={cn(
-        "relative flex flex-col h-dvh w-screen font-helvetica transition-colors duration-500 overflow-hidden",
+        // Substituído 'relative h-dvh w-screen' por 'fixed inset-0'
+        "fixed inset-0 flex flex-col font-helvetica transition-colors duration-500 overflow-hidden",
         modeStyles[currentMode].bgSurface,
         modeStyles[currentMode].text
       )}
@@ -40,4 +56,4 @@ export default function App() {
       </AnimatePresence>
     </div>
   );
-}
+} 
