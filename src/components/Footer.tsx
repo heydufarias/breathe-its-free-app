@@ -1,6 +1,6 @@
+import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import type { Language } from "../lib/types";
-import { motion } from "framer-motion";
 
 export function Footer() {
   const { i18n } = useTranslation();
@@ -35,7 +35,7 @@ export function Footer() {
         })}
       </div>
 
-      <div className="text-[clamp(1rem,4vmin,1.5rem)] font-semibold leading-none">
+      <div className="text-[clamp(1.4rem,4vmin,1.5rem)] font-semibold leading-none">
         ©2026
       </div>
     </footer>
