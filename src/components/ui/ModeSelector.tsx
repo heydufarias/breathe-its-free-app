@@ -15,36 +15,35 @@ export function ModeSelector({
   const { t } = useTranslation();
 
   return (
-    <div className="w-full">
+    <div
+      className={cn(
+        "relative flex w-full rounded-full transition-colors duration-500",
+        modeStyles[currentMode].bgPrimary
+      )}
+    >
       <div
         className={cn(
-          "relative flex p-1 mt-0.5 rounded-full backdrop-blur-2xl backdrop-saturate-150 transition-colors duration-500",
-          modeStyles[currentMode].bgPrimary
+          "absolute top-1 bottom-1 left-1 bg-white rounded-full transition-all duration-500 ease-in-out",
+          modeStyles[currentMode].translate
         )}
-      >
-        <div
-          className={cn(
-            "absolute top-1 bottom-1 left-1 bg-white rounded-full backdrop-blur-md transition-all duration-500 ease-in-out",
-            modeStyles[currentMode].translate
-          )}
-          style={{ width: "calc((100% - 0.5rem) / 3)" }}
-        />
+        style={{ width: "calc((100% - 0.5rem) / 3)" }}
+      />
 
-        {MODES.map((mode) => (
-          <button
-            key={mode}
-            onClick={() => onModeChange(mode)}
-            className={cn(
-              "relative flex flex-1 h-[clamp(4rem,6vh,9rem)] items-center justify-center text-center text-2xl z-10 cursor-pointer transition-colors duration-500",
-              currentMode === mode ? "" : "text-white/60"
-            )}
-          >
-            <span className="relative inline-block overflow-hidden leading-none">
-              {t(`modes.${mode}`)}
-            </span>
-          </button>
-        ))}
-      </div>
+      {MODES.map((mode) => (
+        <button
+          key={mode}
+          onClick={() => onModeChange(mode)}
+          className={cn(
+            " flex flex-1 h-[clamp(4rem,6vh,9rem)] items-center justify-center text-center text-2xl z-10 cursor-pointer transition-colors duration-500",
+            currentMode === mode ? "" : "text-white/60"
+          )}
+        >
+          <span>
+            {t(`modes.${mode}`)}
+          </span>
+        </button>
+      ))}
     </div>
+
   );
 }
