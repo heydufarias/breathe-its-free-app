@@ -36,7 +36,7 @@ export function ModeSelector({
             onClick={() => onModeChange(mode)}
             className={cn(
               "relative flex flex-1 h-[clamp(4rem,6vh,9rem)] items-center justify-center text-center text-2xl z-10 cursor-pointer transition-colors duration-500",
-              currentMode === mode ? "text-neutral-900" : "text-white/60"
+              currentMode === mode ? "" : "text-white/60"
             )}
           >
             <span className="relative inline-block overflow-hidden leading-none">
