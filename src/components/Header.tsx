@@ -10,16 +10,17 @@ export function Header({ showInfoButton, onInfoButtonClick }: HeaderProps) {
   const { t } = useTranslation();
 
   return (
-    <header className="absolute top-0 left-0 right-0 flex items-center justify-between px-[clamp(1.5rem,5vw,2.5rem)] pt-4 z-10">
-      <div className="flex flex-col text-4xl font-semibold tracking-tight leading-7">
+    <header className="flex items-center justify-between px-[clamp(1.5rem,5vmin,2.5rem)] py-2">
+      <div className="flex flex-col text-[clamp(1.5rem,4vmin,2rem)] font-semibold tracking-tight leading-none">
         <span>Breathe,</span>
-        <span>it is free.</span>
+        {/* O -mt-2 puxa essa linha para cima. 
+            Aumente para -mt-3 ou diminua para -mt-1 para ajustar a colagem exata */}
+        <span className="-mt-1.5">it is free.</span>
       </div>
-
       <MotionFade visible={showInfoButton}>
         <button
           onClick={onInfoButtonClick}
-          className="text-2xl font-semibold cursor-pointer"
+          className="text-[clamp(1rem,4vmin,1.5rem)] font-semibold cursor-pointer"
         >
           {t("info.howToUse.title")}
         </button>

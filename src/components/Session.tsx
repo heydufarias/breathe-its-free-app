@@ -130,51 +130,57 @@ export function Session() {
   }
 
   return (
-    <main className="relative flex-1 tracking-tight pointer-events-none">
-      <MotionFade visible={!isSessionActive} duration={0.5}>
-        <div className="absolute top-26 left-1/2 flex flex-col w-full max-w-122 items-center px-5 sm:px-0 -translate-x-1/2 z-20 pointer-events-auto">
-          <div className="flex text-3xl">{t("session.title")}</div>
-          <ModeSelector
-            currentMode={currentMode}
-            onModeChange={setMode}
-          />
-        </div>
-      </MotionFade>
-
-      <MotionFade visible={sessionStage === "prepare"} duration={sessionStage === "prepare" ? 1.5 : sessionStage === "active" ? 1.5 : 0.2}>
-        <div className="absolute top-36 left-1/2 flex flex-col w-full max-w-122 items-center px-5 sm:px-0 -translate-x-1/2 z-20 text-center pointer-events-none">
-          <div className="flex text-[6.5vmin] sm:text-5xl tracking-tight leading-[37.2px]">
-            {t("session.prepare")}
-          </div>
-        </div>
-      </MotionFade>
-
-      <div className="absolute inset-0 flex items-center justify-center z-10 pointer-events-none">
-        <div className="relative w-[98vmin] max-w-160 aspect-square translate-y-10">
+    <div className="relative flex-1 w-full h-full tracking-tight">
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-10">
+        <div className="relative flex items-center justify-center w-[98vmin] max-w-160 aspect-square">
           <AnimatePresence mode="wait">
             {renderCircleContent()}
           </AnimatePresence>
         </div>
       </div>
 
-      <div className="absolute bottom-22 sm:bottom-17 left-1/2 flex w-full max-w-122 items-end px-5 sm:px-0 gap-2 -translate-x-1/2 z-20 pointer-events-auto">
-        <MainButton
-          currentMode={currentMode}
-          onStart={startSession}
-          onFinish={finishSession}
-          isSessionActive={isSessionActive}
-          disabled={isTransitioning}
-        />
+      <div className="absolute top-0 left-0 w-full flex justify-center z-20 pointer-events-none pt-2 sm:pt-4">
+        <div className="relative flex flex-col w-full max-w-122 items-center px-5 sm:px-0">
+          <MotionFade visible={!isSessionActive} duration={0.5}>
+            <div className="flex flex-col items-center w-full pointer-events-auto">
+              <div className="flex text-3xl">{t("session.title")}</div>
+              <ModeSelector
+                currentMode={currentMode}
+                onModeChange={setMode}
+              />
+            </div>
+          </MotionFade>
 
-        <CycleSelector
-          currentMode={currentMode}
-          cycles={cycles}
-          onDecrease={decreaseCycles}
-          onIncrease={increaseCycles}
-          isSessionActive={isSessionActive}
-          currentCycle={currentCycle}
-        />
+          <MotionFade visible={sessionStage === "prepare"} duration={sessionStage === "prepare" ? 1.5 : sessionStage === "active" ? 1.5 : 0.2}>
+            <div className="absolute top-0 left-0 right-0 flex flex-col items-center w-full text-center">
+              <div className="flex text-[6.5vmin] sm:text-5xl tracking-tight leading-[37.2px]">
+                {t("session.prepare")}
+              </div>
+            </div>
+          </MotionFade>
+        </div>
       </div>
-    </main>
+
+      <div className="absolute bottom-0 left-0 w-full flex justify-center z-20 pointer-events-none pb-4 sm:pb-6">
+        <div className="flex w-full max-w-122 items-end px-5 sm:px-0 gap-2 pointer-events-auto">
+          <MainButton
+            currentMode={currentMode}
+            onStart={startSession}
+            onFinish={finishSession}
+            isSessionActive={isSessionActive}
+            disabled={isTransitioning}
+          />
+
+          <CycleSelector
+            currentMode={currentMode}
+            cycles={cycles}
+            onDecrease={decreaseCycles}
+            onIncrease={increaseCycles}
+            isSessionActive={isSessionActive}
+            currentCycle={currentCycle}
+          />
+        </div>
+      </div>
+    </div>
   );
 }

@@ -8,7 +8,10 @@ interface ModeSelectorProps {
   onModeChange: (mode: BreathMode) => void;
 }
 
-export function ModeSelector({ currentMode, onModeChange }: ModeSelectorProps) {
+export function ModeSelector({
+  currentMode,
+  onModeChange,
+}: ModeSelectorProps) {
   const { t } = useTranslation();
 
   return (
@@ -32,7 +35,7 @@ export function ModeSelector({ currentMode, onModeChange }: ModeSelectorProps) {
             key={mode}
             onClick={() => onModeChange(mode)}
             className={cn(
-              "relative flex flex-1 h-16 items-center justify-center text-center text-2xl z-10 cursor-pointer transition-colors duration-300",
+              "relative flex flex-1 h-[clamp(4rem,6vh,9rem)] items-center justify-center text-center text-2xl z-10 cursor-pointer transition-colors duration-300",
               currentMode === mode ? "" : "text-white/60"
             )}
           >
